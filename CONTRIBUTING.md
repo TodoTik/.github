@@ -3,11 +3,14 @@
 ## Commit authorship policy
 
 Developers are responsible for their commits. AI tools may assist with code,
-but commits are authored by the human who reviews and approves them.
+but commits are authored by the people who review and approve them.
 
-**Do not add AI co-authorship lines** (`Co-Authored-By:` referencing AI
-assistants) to commit messages. A `commit-msg` hook in each repository
-enforces this automatically.
+**Co-/authorship is strictly for natural persons, or omitted.** A commit may
+name a person as author or co-author (`Co-authored-by: Name <email>`), or name
+no one. It never attributes authorship or co-authorship to an AI assistant,
+agent, bot, or other tool. A `commit-msg` hook in each repository and a shared
+CI check enforce this; a person listed in the repository's `AUTHORS` or
+`CONTRIBUTORS` file is always accepted, whatever their name.
 
 ## Git hooks setup
 
