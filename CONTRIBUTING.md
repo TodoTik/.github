@@ -9,8 +9,9 @@ but commits are authored by the people who review and approve them.
 name a person as author or co-author (`Co-authored-by: Name <email>`), or name
 no one. It never attributes authorship or co-authorship to an AI assistant,
 agent, bot, or other tool. A `commit-msg` hook in each repository and a shared
-CI check enforce this; a person listed in the repository's `AUTHORS` or
-`CONTRIBUTORS` file is always accepted, whatever their name.
+CI check enforce this; a person whose email address is listed in the
+repository's `AUTHORS` or `CONTRIBUTORS` file is always accepted, whatever
+their name.
 
 ## Git hooks setup
 

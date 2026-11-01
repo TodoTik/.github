@@ -46,8 +46,9 @@ reject() {
 # 1. A co-/authorship trailer (Co-authored-by, Coauthored by, Co-author,
 #    Author, Authored-by) whose value points to an AI: an assistant, model or
 #    agent name, a [bot] account, or an AI vendor's address, as a whole word.
-#    A person listed in the repository's contributors file passes whatever
-#    their name; without such a file nobody is listed.  Keep ai_identities and
+#    A trailer whose email address the repository's contributors file lists,
+#    compared whole, passes whatever its name; without such a file nobody is
+#    listed.  Keep ai_identities and
 #    contributor_files identical to AI_IDENTITIES and CONTRIBUTOR_FILES, and
 #    the trailer pattern in step with AUTHORSHIP_TRAILER, in
 #    scripts/commit_attribution.py.
@@ -55,18 +56,18 @@ ai_identities='claude|anthropic|chatgpt|openai|gpt(-?[0-9][a-z0-9]*)?|copilot|ge
 contributor_files='AUTHORS AUTHORS.md AUTHORS.txt CONTRIBUTORS CONTRIBUTORS.md CONTRIBUTORS.txt'
 wb='[^[:alnum:]_]'
 root=$(git rev-parse --show-toplevel 2>/dev/null || pwd)
-contributors=$(for f in $contributor_files; do
-    [ -f "$root/$f" ] && cat "$root/$f"
+addresses=$(for f in $contributor_files; do
+    [ -f "$root/$f" ] && grep -oE '[[:alnum:]._%+-]+@[[:alnum:].-]+' "$root/$f"
 done)
 hit=$(printf '%s\n' "$body" |
     grep -iE '^[[:space:]]*(co[-[:space:]]?)?auth(or|ored)([-[:space:]]?by)?[[:space:]]*:' |
     while IFS= read -r line; do
         value=${line#*:}
-        # The person is matched by their address where the trailer gives one.
-        key=$(printf '%s\n' "$value" | sed -n 's/.*<\([^>]*\)>.*/\1/p')
-        [ -n "$key" ] || key=$(printf '%s' "$value" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')
-        if [ -n "$key" ] && [ -n "$contributors" ] &&
-            printf '%s\n' "$contributors" | grep -qiF -- "$key"; then
+        # A listed person is matched by their whole email address only.
+        key=$(printf '%s\n' "$value" | sed -n 's/.*<\([^>]*\)>.*/\1/p' |
+            sed 's/^[[:space:]]*//; s/[[:space:]]*$//')
+        if [ -n "$key" ] && [ -n "$addresses" ] &&
+            printf '%s\n' "$addresses" | grep -qixF -- "$key"; then
             continue
         fi
         if printf '%s\n' "$value" | grep -qiE "(^|${wb})(${ai_identities})(\$|${wb})"; then
