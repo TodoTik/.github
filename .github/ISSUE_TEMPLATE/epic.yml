@@ -1,0 +1,15 @@
+name: Epic
+description: A large initiative, delivered through its sub-issues.
+type: Epic
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: The outcome and why it matters. Add its parts as sub-issues.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria

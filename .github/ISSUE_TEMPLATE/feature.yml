@@ -1,0 +1,18 @@
+name: Feature
+description: Propose one unit of user-facing value.
+type: Feature
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What it delivers, and for whom.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: How we know it is done.
+    validations:
+      required: true
