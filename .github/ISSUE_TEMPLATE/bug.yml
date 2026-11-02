@@ -1,0 +1,29 @@
+name: Bug
+description: Report something that does not work as expected.
+type: Bug
+body:
+  - type: textarea
+    id: actual
+    attributes:
+      label: What happens
+      description: What you observed, including any error message.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: "1. "
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What should happen
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version or environment
+      description: For example the release version, browser or device.
